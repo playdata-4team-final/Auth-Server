@@ -1,0 +1,59 @@
+
+### 회원가입
+POST http://localhost:8000/api/v1/auth
+Content-Type: application/json
+
+{
+  "userId" : "impr556o",
+  "password" : "pas3s22232",
+  "name" : "juh4o28",
+  "status" : "NORMAL",
+  "role" : "PROFESSOR",
+  "email" : "vutus17687@naver.com",
+  "phNumber" :  "010-1745-4477"
+}
+
+### 로그인
+# @no-cookie-jar
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "userId" : "impr556o",
+  "password" : "pas3s22232"
+}
+
+### AccessToken 재발급
+# @no-cookie-jar
+GET http://localhost:8080/api/v1/auth/reissue
+Accept: application/json
+Cookie: RefreshToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWFkYWFkYS02ODJiLTQ5OGUtYjZlOS1kMDZkYWEyMGEyOGQiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5OTM0NjA0OCwiaWF0IjoxNjk4NzQxMjQ4fQ.P9F_jBGqOO1MoZ4hszAb9G2Y4mU7Ngb0OZg3yJ9DsmY
+
+### 이메일 인증
+POST http://localhost:8080/api/v1/auth/send
+Content-Type: application/json
+
+{
+  "email" : "vutus5@naver.com"
+}
+
+### 테스트
+GET http://localhost:8000/api/v1/test
+Accept: application/json
+Cookie: AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NWIyNDRkZS0yZDU0LTRhMmMtOGY1NC0xZWE2MTczNTI1YTUiLCJyb2xlIjoiUFJPRkVTU09SIiwiZXhwIjoxNjk4ODI0NDAzLCJpYXQiOjE2OTg4MjA4MDN9.SoTDb4ItLU42mVYwCCshOV0siYYorhlZ6OWIzbHY8cQ
+
+### 암호화
+POST http://localhost:8888/encrypt
+Content-Type: text/plain
+
+wfgj vyxo yoyj ekyv
+
+### 암호화 해독
+POST http://localhost:8888/decrypt
+Content-Type: text/plain
+
+cc613fb0a4204e58cb217e30f2cd6835da83b9bb1111e0146eb648d2101892ef584f7e2cad5c8403b5a5329e6befe095fd9ad973ab9e539f72e7fc5fae6a1144ff2caf6dcdf1b51dcf136e7390aa0c85
+
+### 테스트2
+GET http://localhost:8000/api/v1/test2
+Accept: application/json

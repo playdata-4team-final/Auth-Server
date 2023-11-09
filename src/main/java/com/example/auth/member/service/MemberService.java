@@ -1,6 +1,7 @@
 package com.example.auth.member.service;
 
 import com.example.auth.client.api.LmsServerClient;
+import com.example.auth.global.exception.NotFoundException;
 import com.example.auth.global.util.JwtUtil;
 import com.example.auth.member.dto.EmailVerification;
 import com.example.auth.member.dto.LoginRequest;
@@ -22,6 +23,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -63,17 +66,18 @@ public class MemberService {
 
     public void login(LoginRequest request, HttpServletResponse response) {
 
+//        throw new NotFoundException("올바른 비밀번호가 아닙니다.");
         String userId = request.getUserId();
         String password = request.getPassword();
 
         // 회원 찾기 (userId)
         Member member = repository.findByUserId(userId).orElseThrow(
-                () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
+                () -> new NotFoundException("올바른 아이디가 아닙니다.")
         );
 
         // 회원 찾기 (password)
         if (!passwordEncoder.matches(password, member.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new NotFoundException("올바른 비밀번호가 아닙니다.");
         }
 
         String role = String.valueOf(member.getRole());
@@ -140,7 +144,7 @@ public class MemberService {
             mimeMessageHelper.setSubject("이메일 인증번호 입니다."); // 메일 제목
             mimeMessageHelper.setText("1648", false); // 메일 본문 내용, HTML 여부
             // 잠시 메일보내기 막음
-            // javaMailSender.send(mimeMessage);
+//             javaMailSender.send(mimeMessage);
 
             ValueOperations<String, String> ops = redisTemplate.opsForValue();
             ops.set(emailVerification.getEmail(),"1648",EXPIRATION_SECONDS, TimeUnit.SECONDS);
@@ -149,8 +153,11 @@ public class MemberService {
         }
     }
 
-    public String emailCheck(String email) {
-        return redisTemplate.opsForValue().get(email);
+    public Boolean emailCheck(EmailVerification emailVerification) {
+        String redisVerification = Optional.ofNullable(
+                redisTemplate.opsForValue().get(emailVerification.getEmail())
+        ).orElseThrow( () -> new NotFoundException("이메일 인증하기를 눌러주세요.") );
+        return redisVerification.equals(emailVerification.getVerificationNumber());
     }
     
 }

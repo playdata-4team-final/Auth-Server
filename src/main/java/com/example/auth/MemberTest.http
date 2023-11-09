@@ -4,23 +4,26 @@ POST http://localhost:8000/api/v1/auth
 Content-Type: application/json
 
 {
-  "userId" : "impr556o",
-  "password" : "pas3s22232",
-  "name" : "juh4o28",
+  "userId" : "3fdger",
+  "password" : "24wefe37",
+  "name" : "kik4i",
   "status" : "NORMAL",
-  "role" : "PROFESSOR",
-  "email" : "vutus17687@naver.com",
-  "phNumber" :  "010-1745-4477"
+  "role" : "STUDENT",
+  "email" : "d1swede4358@naver.com",
+  "phNumber" : "",
+  "verificationNumber" : ""
+
+
 }
 
 ### 로그인
 # @no-cookie-jar
-POST http://localhost:8080/api/v1/auth/login
+POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "userId" : "impr556o",
-  "password" : "pas3s22232"
+  "userId" : "qwer7474377",
+  "password" : "1234"
 }
 
 ### AccessToken 재발급
@@ -34,13 +37,22 @@ POST http://localhost:8080/api/v1/auth/send
 Content-Type: application/json
 
 {
-  "email" : "vutus5@naver.com"
+  "email" : "asd"
+}
+
+### 이메일 인증 확인
+POST http://localhost:8080/api/v1/auth/check
+Content-Type: application/json
+
+{
+  "email" : "vutus5@naver.com",
+  "number" : "1648"
 }
 
 ### 테스트
 GET http://localhost:8000/api/v1/test
 Accept: application/json
-Cookie: AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NWIyNDRkZS0yZDU0LTRhMmMtOGY1NC0xZWE2MTczNTI1YTUiLCJyb2xlIjoiUFJPRkVTU09SIiwiZXhwIjoxNjk4ODI0NDAzLCJpYXQiOjE2OTg4MjA4MDN9.SoTDb4ItLU42mVYwCCshOV0siYYorhlZ6OWIzbHY8cQ
+Cookie:  AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiMGMxZDM4NC1kNzk5LTQ2MTAtOWVmNi1iYjNkYjVjMTEzNTgiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5ODk4NDI3NSwiaWF0IjoxNjk4OTgwNjc1fQ.mxFl_ktCYOxC-hhKRfBcDqaTqB9m3updpm6LZ_87EUc
 
 ### 암호화
 POST http://localhost:8888/encrypt
@@ -57,3 +69,4 @@ cc613fb0a4204e58cb217e30f2cd6835da83b9bb1111e0146eb648d2101892ef584f7e2cad5c8403
 ### 테스트2
 GET http://localhost:8000/api/v1/test2
 Accept: application/json
+

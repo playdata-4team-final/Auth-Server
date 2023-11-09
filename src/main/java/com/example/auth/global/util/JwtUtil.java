@@ -67,7 +67,7 @@ public class JwtUtil {
         Cookie cookie = new Cookie(tokenType, token.substring(7));
 
         // 브라우저에서 쿠키 접근 방지
-        cookie.setHttpOnly(true);
+//        cookie.setHttpOnly(true);
 
         // HTTPS 연결에서만 쿠키 전송
         // cookie.setSecure(true);

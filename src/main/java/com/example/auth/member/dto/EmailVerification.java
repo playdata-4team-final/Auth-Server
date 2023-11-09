@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmailVerification {
     private String email;
+    private String verificationNumber;
 }

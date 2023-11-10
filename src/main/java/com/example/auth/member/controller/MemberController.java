@@ -56,4 +56,10 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/info")
+    public LmsResponse<String> userInfo(@CookieValue(value = "AccessToken", required = false) Cookie cookieAccessToken){
+        String role = memberService.userInfo(cookieAccessToken);
+        return new LmsResponse<>(HttpStatus.OK, role, "조회 성공", "", LocalDateTime.now());
+    }
+
 }

@@ -159,5 +159,10 @@ public class MemberService {
         ).orElseThrow( () -> new NotFoundException("이메일 인증하기를 눌러주세요.") );
         return redisVerification.equals(emailVerification.getVerificationNumber());
     }
-    
+
+    public String userInfo(Cookie cookieAccessToken) {
+        String token = cookieAccessToken.getValue();
+        System.out.println("조회!");
+        return jwtUtil.getRoleFromToken(token);
+    }
 }

@@ -1,9 +1,6 @@
 package com.example.auth.global.exception.handler;
 
-import com.example.auth.global.exception.ClientException;
-import com.example.auth.global.exception.DuplicateException;
-import com.example.auth.global.exception.MethodException;
-import com.example.auth.global.exception.NotFoundException;
+import com.example.auth.global.exception.*;
 import com.example.auth.global.response.LmsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -43,5 +40,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String errorMessage = ex.getMessage();
         return new LmsResponse<>(HttpStatus.BAD_REQUEST, "","METHOD-EXCEPTION" , errorMessage, LocalDateTime.now());
     }
+
+    @ExceptionHandler(JwtException.class)
+    protected LmsResponse<String> handleJwtException(
+            JwtException ex) {
+        String errorMessage = ex.getMessage();
+        return new LmsResponse<>(HttpStatus.BAD_REQUEST, "","JWT-EXCEPTION" , errorMessage, LocalDateTime.now());
+    }
+
+
 
 }

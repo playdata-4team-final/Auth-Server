@@ -17,7 +17,8 @@ Content-Type: application/json
 ### 권한 확인
 POST http://localhost:8000/api/v1/auth/info
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3NmYwODUyNi0yYWE2LTQ3YTItODY3ZS04MmIxNDA1OTQ5ZjQiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5OTYwNzQ0MSwiaWF0IjoxNjk5NjAzODQxfQ.FQR_wiXID_cGtyeqBrpKVlB-i-KBDn4fukn1fGLnBBY
+#Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3NmYwODUyNi0yYWE2LTQ3YTItODY3ZS04MmIxNDA1OTQ5ZjQiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5OTYwNzQ0MSwiaWF0IjoxNjk5NjAzODQxfQ.FQR_wiXID_cGtyeqBrpKVlB-i-KBDn4fukn1fGLnBBY
+Cookie: AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiMGMxZDM4NC1kNzk5LTQ2MTAtOWVmNi1iYjNkYjVjMTEzNTgiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5ODk4NDI3NSwiaWF0IjoxNjk4OTgwNjc1fQ.mxFl_ktCYOxC-hhKRfBcDqaTqB9m3updpm6LZ_87EUc
 
 ### 로그인
 # @no-cookie-jar
@@ -25,8 +26,8 @@ POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "userId" : "9asdfsdsdfsde2234r",
-  "password" : "2fw23142423423445wefe37"
+  "userId" : "imstu",
+  "password" : "a123123"
 }
 
 ### AccessToken 재발급

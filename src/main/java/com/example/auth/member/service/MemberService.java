@@ -23,7 +23,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -107,7 +106,7 @@ public class MemberService {
         String redisRefreshToken = redisTemplate.opsForValue().get(String.valueOf(memberId)).substring(7);
 
         // 유효성 검사
-        String msg = jwtUtil.validateToken(redisRefreshToken);
+//        jwtUtil.validateToken(redisRefreshToken);
 
         // 토큰값 비교
         if (refreshTokenValue.equals(redisRefreshToken)) {
@@ -162,6 +161,7 @@ public class MemberService {
 
     public String userInfo(Cookie cookieAccessToken) {
         String token = cookieAccessToken.getValue();
+//        jwtUtil.validateToken(token);
         System.out.println("조회!");
         return jwtUtil.getRoleFromToken(token);
     }

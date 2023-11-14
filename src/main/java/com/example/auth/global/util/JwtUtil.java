@@ -1,5 +1,6 @@
 package com.example.auth.global.util;
 
+import com.example.auth.global.exception.JwtException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -46,7 +47,7 @@ public class JwtUtil {
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
     }
-    
+
     //리프레시 토큰 생성
     public String createRefreshToken(UUID memberId, String role) {
         Date date = new Date();
@@ -59,9 +60,9 @@ public class JwtUtil {
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
     }
-    
+
     // JWT Cookie 에 저장
-    public void addJwtToCookie(String tokenType,String token, HttpServletResponse response) {
+    public void addJwtToCookie(String tokenType, String token, HttpServletResponse response) {
 
         // Cookie 생성 및 직접 브라우저에 Set
         Cookie cookie = new Cookie(tokenType, token.substring(7));
@@ -84,7 +85,7 @@ public class JwtUtil {
         // Response 객체에 Cookie 추가
         response.addCookie(cookie);
     }
-    
+
     // 토큰으로 유저찾기
     public UUID getMemberIdFromToken(String token) {
 //        String tokenValue = token.substring(7);
@@ -110,23 +111,23 @@ public class JwtUtil {
         return (String) claims.get("role");
     }
 
-    public String validateToken(String token) {
+    public void validateToken(String token) {
         String tokenValue = token.substring(7);
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(tokenValue);
-            return "Authorized";
         } catch (SecurityException | MalformedJwtException e) {
             // 유효하지 않는 JWT 서명
-            return "Unauthorized: Invalid JWT signature";
+            throw new JwtException("Unauthorized: Invalid JWT signature");
         } catch (ExpiredJwtException e) {
             // 만료된 JWT 토큰
-            return "Unauthorized: Expired JWT token";
+            throw new JwtException("Unauthorized: Expired JWT token");
         } catch (UnsupportedJwtException e) {
             // 지원되지 않는 JWT 토큰
-            return "Unauthorized: Unsupported JWT token";
+            throw new JwtException("Unauthorized: Invalid JWT signature");
         } catch (IllegalArgumentException e) {
             // 잘못된 JWT 토큰
-            return "Unauthorized: JWT claims is empty";
+            throw new JwtException("Unauthorized: Invalid JWT signature");
         }
+
     }
 }

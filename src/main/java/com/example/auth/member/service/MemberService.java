@@ -4,6 +4,7 @@ import com.example.auth.client.api.LmsServerClient;
 import com.example.auth.global.exception.NotFoundException;
 import com.example.auth.global.util.JwtUtil;
 import com.example.auth.member.dto.EmailVerification;
+import com.example.auth.member.dto.InfoResponse;
 import com.example.auth.member.dto.LoginRequest;
 import com.example.auth.member.dto.SignupRequest;
 import com.example.auth.member.entity.Member;
@@ -159,10 +160,11 @@ public class MemberService {
         return redisVerification.equals(emailVerification.getVerificationNumber());
     }
 
-    public String userInfo(Cookie cookieAccessToken) {
+    public InfoResponse userInfo(Cookie cookieAccessToken) {
         String token = cookieAccessToken.getValue();
-//        jwtUtil.validateToken(token);
-        System.out.println("조회!");
-        return jwtUtil.getRoleFromToken(token);
+        String id = String.valueOf(jwtUtil.getMemberIdFromToken(token));
+        String role = jwtUtil.getRoleFromToken(token);
+        return new InfoResponse(id,role);
     }
+
 }

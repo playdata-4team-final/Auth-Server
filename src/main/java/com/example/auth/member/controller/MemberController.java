@@ -2,6 +2,7 @@ package com.example.auth.member.controller;
 
 import com.example.auth.global.response.LmsResponse;
 import com.example.auth.member.dto.EmailVerification;
+import com.example.auth.member.dto.InfoResponse;
 import com.example.auth.member.dto.LoginRequest;
 import com.example.auth.member.dto.SignupRequest;
 import com.example.auth.member.service.MemberService;
@@ -57,9 +58,10 @@ public class MemberController {
     }
 
     @PostMapping("/info")
-    public LmsResponse<String> userInfo(@CookieValue(value = "AccessToken", required = false) Cookie cookieAccessToken){
-        String role = memberService.userInfo(cookieAccessToken);
-        return new LmsResponse<>(HttpStatus.OK, role, "조회 성공", "", LocalDateTime.now());
+    public LmsResponse<InfoResponse> userInfo(@CookieValue(value = "AccessToken", required = false) Cookie cookieAccessToken){
+
+        InfoResponse infoResponse =  memberService.userInfo(cookieAccessToken);
+        return new LmsResponse<>(HttpStatus.OK, infoResponse, "조회 성공", "", LocalDateTime.now());
     }
 
 }

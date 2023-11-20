@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +32,9 @@ public class Member {
     private String email;
 
     private String phNumber;
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberMajor> majorIds;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

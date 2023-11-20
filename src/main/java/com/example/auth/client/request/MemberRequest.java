@@ -1,5 +1,8 @@
 package com.example.auth.client.request;
 
+
+import com.example.auth.member.entity.MemberRole;
+import com.example.auth.member.entity.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,12 +15,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StudentRequest {
+public class MemberRequest {
     private UUID id;
-    private String studentName;
+    private String name;
     private Integer year;
-    private int studentNumber;
     private String email;
     private String phNumber;
+    private MemberRole role;
     private List<Long> majorIds;
+    private MemberStatus status;
 }

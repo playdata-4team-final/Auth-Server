@@ -64,4 +64,5 @@ public class MemberController {
         return new LmsResponse<>(HttpStatus.OK, infoResponse, "조회 성공", "", LocalDateTime.now());
     }
 
+
 }

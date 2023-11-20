@@ -1,6 +1,7 @@
 package com.example.auth.member.service;
 
 import com.example.auth.client.api.LmsServerClient;
+import com.example.auth.client.api.MailServerClient;
 import com.example.auth.global.exception.NotFoundException;
 import com.example.auth.global.util.JwtUtil;
 import com.example.auth.member.dto.EmailVerification;
@@ -38,6 +39,7 @@ public class MemberService {
     private final JavaMailSender javaMailSender;
     private final LmsServerClient lmsServerClient;
     private final StringRedisTemplate redisTemplate;
+    private final MailServerClient mailServerClient;
 
     @Transactional
     public void saveMember(SignupRequest request){
@@ -46,14 +48,16 @@ public class MemberService {
             Member member = repository.save(request.toEntity(encodePassword));
             if (request.getRole() == MemberRole.STUDENT) {
                 ResponseEntity<Void> response = lmsServerClient.saveStudent(request.toStudent(member, 2023));
-                if (response.getStatusCode() != HttpStatus.CREATED) {
+                ResponseEntity<Void> response2 = mailServerClient.saveMember(request.toMember(member));
+                if (response.getStatusCode() != HttpStatus.CREATED && response2.getStatusCode() != HttpStatus.CREATED) {
                     String err = "-SERVICE DEAD";
                     throw new RuntimeException(err);
                 }
                 System.out.println("학생으로 회원가입");
             } else if (request.getRole() == MemberRole.PROFESSOR) {
                 ResponseEntity<Void> response = lmsServerClient.saveProfessor(request.toProfessor(member));
-                if (response.getStatusCode() != HttpStatus.CREATED) {
+                ResponseEntity<Void> response2 = mailServerClient.saveMember(request.toMember(member));
+                if (response.getStatusCode() != HttpStatus.CREATED && response2.getStatusCode() != HttpStatus.CREATED) {
                     String err = "-SERVICE DEAD";
                     throw new RuntimeException(err);
                 }
